@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ForoNexo</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #eef2ff;
+  color: #1e293b;
+}
+
+/* HEADER */
+header {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  padding: 22px;
+}
+
+.nav {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 27px;
+  font-weight: bold;
+}
+
+.nav button {
+  background: white;
+  color: #2563eb;
+  margin-left: 8px;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+/* HERO */
+.hero {
+  background: white;
+  border-radius: 18px;
+  padding: 35px;
+  margin-bottom: 25px;
+  box-shadow: 0 5px 20px #0001;
+}
+
+.hero h1 {
+  font-size: 34px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  color: #64748b;
+  font-size: 17px;
+}
+
+/* FORMULARIO */
+.card {
+  background: white;
+  padding: 22px;
+  border-radius: 15px;
+  margin-bottom: 22px;
+  box-shadow: 0 4px 15px #0001;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 13px;
+  margin: 8px 0;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  font-size: 15px;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+button {
+  border: none;
+  background: #2563eb;
+  color: white;
+  padding: 11px 17px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  opacity: .9;
+}
+
+.secondary {
+  background: #e2e8f0;
+  color: #1e293b;
+}
+
+/* POSTS */
+.post {
+  background: white;
+  padding: 22px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 15px #0001;
+}
+
+.post h2 {
+  color: #2563eb;
+  margin-bottom: 8px;
+}
+
+.post small {
+  color: #64748b;
+}
+
+.post p {
+  margin: 15px 0;
+  line-height: 1.6;
+}
+
+.like {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+/* LIBROS */
+.books {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+}
+
+.book {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px #0001;
+}
+
+.book-cover {
+  height: 160px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #312e81, #7c3aed);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.book p {
+  color: #64748b;
+  margin: 10px 0 15px;
+}
+
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #0008;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  width: 100%;
+  max-width: 430px;
+  padding: 28px;
+  border-radius: 18px;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  right: 18px;
+  top: 15px;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.info {
+  background: #eff6ff;
+  border-left: 4px solid #2563eb;
+  padding: 13px;
+  margin: 15px 0;
+  color: #334155;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.user {
+  background: #ede9fe;
+  color: #5b21b6;
+  padding: 8px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+footer {
+  text-align: center;
+  color: #64748b;
+  padding: 35px;
+}
+
+/* CELULAR */
+@media(max-width: 600px) {
+  .nav {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .hero h1 {
+    font-size: 27px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">🌐 ForoNexo</div>
+
+    <div id="accountArea">
+      <button onclick="abrirLogin()">Iniciar sesión</button>
+      <button onclick="abrirRegistro()">Crear cuenta</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <h1>Bienvenido a ForoNexo 👋</h1>
+    <p>
+      Un lugar para compartir ideas, hacer preguntas, conocer personas,
+      descubrir libros y participar en la comunidad.
+    </p>
+  </section>
+
+  <!-- CREAR PUBLICACIÓN -->
+  <section class="card">
+    <h2>📝 Crear publicación</h2>
+
+    <input id="title" placeholder="Título de tu publicación">
+
+    <input id="author" placeholder="Tu nombre">
+
+    <textarea id="content"
+      placeholder="¿Qué quieres compartir con la comunidad?"></textarea>
+
+    <button onclick="crearPost()">Publicar</button>
+  </section>
+
+  <!-- PUBLICACIONES -->
+  <h2 style="margin-bottom:15px;">🔥 Publicaciones recientes</h2>
+
+  <section id="posts"></section>
+
+  <!-- LIBROS -->
+  <section class="card" style="margin-top:35px;">
+    <h2>📚 Biblioteca de ForoNexo</h2>
+    <p style="margin-top:8px;color:#64748b;">
+      Explora libros compartidos por la comunidad.
+      Para descargar un archivo tendrás que iniciar sesión.
+    </p>
+  </section>
+
+  <section class="books">
+
+    <article class="book">
+      <div class="book-cover">📖<br>Libro de ejemplo</div>
+      <h3>Introducción a la lectura</h3>
+      <p>Un pequeño libro para comenzar a explorar nuestra biblioteca.</p>
+      <button onclick="descargarLibro('Introducción a la lectura')">
+        ⬇️ Descargar
+      </button>
+    </article>
+
+    <article class="book">
+      <div class="book-cover">💡<br>Ideas</div>
+      <h3>Ideas y creatividad</h3>
+      <p>Material de ejemplo para la comunidad de ForoNexo.</p>
+      <button onclick="descargarLibro('Ideas y creatividad')">
+        ⬇️ Descargar
+      </button>
+    </article>
+
+    <article class="book">
+      <div class="book-cover">🚀<br>Aprender</div>
+      <h3>Aprender algo nuevo</h3>
+      <p>Un recurso de ejemplo para la biblioteca.</p>
+      <button onclick="descargarLibro('Aprender algo nuevo')">
+        ⬇️ Descargar
+      </button>
+    </article>
+
+  </section>
+
+</main>
+
+<footer>
+  © 2026 ForoNexo — Comunidad para compartir y aprender.
+</footer>
+
+
+<!-- MODAL LOGIN -->
+<div class="modal" id="loginModal">
+  <div class="modal-content">
+
+    <span class="close" onclick="cerrarModales()">×</span>
+
+    <h2>🔐 Iniciar sesión</h2>
+
+    <div class="info">
+      Inicia sesión para acceder a las funciones que requieren una cuenta.
+      En esta versión de demostración, los datos se guardan solamente en
+      este navegador.
+    </div>
+
+    <input id="loginEmail" type="email" placeholder="Correo electrónico">
+    <input id="loginPassword" type="password" placeholder="Contraseña">
+
+    <button onclick="login()" style="width:100%;">
+      Iniciar sesión
+    </button>
+
+    <p style="margin-top:15px;text-align:center;">
+      ¿No tienes cuenta?
+      <a href="#" onclick="abrirRegistro()">Crear una</a>
+    </p>
+
+  </div>
+</div>
+
+
+<!-- MODAL REGISTRO -->
+<div class="modal" id="registerModal">
+  <div class="modal-content">
+
+    <span class="close" onclick="cerrarModales()">×</span>
+
+    <h2>✨ Crear cuenta</h2>
+
+    <div class="info">
+      Puedes crear una cuenta para participar en ForoNexo.
+      En esta versión de prueba, la cuenta se guarda localmente en tu navegador.
+      No introduzcas contraseñas que uses en otros servicios.
+    </div>
+
+    <input id="registerName" placeholder="Nombre de usuario">
+    <input id="registerEmail" type="email" placeholder="Correo electrónico">
+    <input id="registerPassword" type="password" placeholder="Contraseña">
+
+    <button onclick="registrar()" style="width:100%;">
+      Crear cuenta
+    </button>
+
+  </div>
+</div>
+
+
+<script>
+
+/* ==========================
+   CUENTAS
+========================== */
+
+let usuarioActual =
+  JSON.parse(localStorage.getItem("usuarioActual")) || null;
+
+let cuentas =
+  JSON.parse(localStorage.getItem("cuentasForoNexo")) || [];
+
+
+/* ==========================
+   PUBLICACIONES
+========================== */
+
+let publicaciones =
+  JSON.parse(localStorage.getItem("publicacionesForoNexo")) || [
+
+  {
+    titulo: "¡Bienvenidos a ForoNexo!",
+    autor: "Admin",
+    contenido:
+      "Este es nuestro primer tema. Preséntate, comparte tus ideas y conoce a la comunidad. 🚀",
+    likes: 5
+  },
+
+  {
+    titulo: "¿Qué están leyendo actualmente?",
+    autor: "Lector",
+    contenido:
+      "Cuéntanos qué libro estás leyendo y qué te está pareciendo.",
+    likes: 8
+  }
+
+];
+
+
+/* ==========================
+   MOSTRAR PUBLICACIONES
+========================== */
+
+function mostrarPosts() {
+
+  const contenedor = document.getElementById("posts");
+
+  contenedor.innerHTML = "";
+
+  publicaciones.forEach((post, index) => {
+
+    contenedor.innerHTML += `
+
+      <article class="post">
+
+        <h2>${escapeHTML(post.titulo)}</h2>
+
+        <small>
+          👤 ${escapeHTML(post.autor)}
+        </small>
+
+        <p>
+          ${escapeHTML(post.contenido)}
+        </p>
+
+        <button class="like"
+          onclick="darLike(${index})">
+
+          👍 ${post.likes}
+
+        </button>
+
+      </article>
+
+    `;
+  });
+}
+
+
+/* ==========================
+   CREAR PUBLICACIÓN
+========================== */
+
+function crearPost() {
+
+  const titulo =
+    document.getElementById("title").value.trim();
+
+  const autor =
+    document.getElementById("author").value.trim();
+
+  const contenido =
+    document.getElementById("content").value.trim();
+
+  if (!titulo || !autor || !contenido) {
+
+    alert("Completa todos los campos.");
+
+    return;
+  }
+
+  publicaciones.unshift({
+
+    titulo,
+    autor,
+    contenido,
+    likes: 0
+
+  });
+
+  localStorage.setItem(
+    "publicacionesForoNexo",
+    JSON.stringify(publicaciones)
+  );
+
+  document.getElementById("title").value = "";
+  document.getElementById("author").value = "";
+  document.getElementById("content").value = "";
+
+  mostrarPosts();
+}
+
+
+/* ==========================
+   LIKES
+========================== */
+
+function darLike(index) {
+
+  publicaciones[index].likes++;
+
+  localStorage.setItem(
+    "publicacionesForoNexo",
+    JSON.stringify(publicaciones)
+  );
+
+  mostrarPosts();
+}
+
+
+/* ==========================
+   REGISTRO
+========================== */
+
+function abrirRegistro() {
+
+  cerrarModales();
+
+  document.getElementById("registerModal").style.display = "flex";
+}
+
+
+function registrar() {
+
+  const nombre =
+    document.getElementById("registerName").value.trim();
+
+  const email =
+    document.getElementById("registerEmail").value.trim();
+
+  const password =
+    document.getElementById("registerPassword").value;
+
+  if (!nombre || !email || !password) {
+
+    alert("Completa todos los campos.");
+
+    return;
+  }
+
+  if (cuentas.some(c => c.email === email)) {
+
+    alert("Ese correo ya está registrado.");
+
+    return;
+  }
+
+  const nuevaCuenta = {
+
+    nombre,
+    email,
+    password
+
+  };
+
+  cuentas.push(nuevaCuenta);
+
+  localStorage.setItem(
+    "cuentasForoNexo",
+    JSON.stringify(cuentas)
+  );
+
+  usuarioActual = {
+
+    nombre,
+    email
+
+  };
+
+  localStorage.setItem(
+    "usuarioActual",
+    JSON.stringify(usuarioActual)
+  );
+
+  cerrarModales();
+
+  actualizarCuenta();
+
+  alert(
+    "¡Cuenta creada! Bienvenido a ForoNexo, " +
+    nombre + " 🎉"
+  );
+}
+
+
+/* ==========================
+   LOGIN
+========================== */
+
+function abrirLogin() {
+
+  cerrarModales();
+
+  document.getElementById("loginModal").style.display = "flex";
+}
+
+
+function login() {
+
+  const email =
+    document.getElementById("loginEmail").value.trim();
+
+  const password =
+    document.getElementById("loginPassword").value;
+
+  const cuenta =
+    cuentas.find(
+      c => c.email === email &&
+           c.password === password
+    );
+
+  if (!cuenta) {
+
+    alert(
+      "Correo o contraseña incorrectos."
+    );
+
+    return;
+  }
+
+  usuarioActual = {
+
+    nombre: cuenta.nombre,
+    email: cuenta.email
+
+  };
+
+  localStorage.setItem(
+    "usuarioActual",
+    JSON.stringify(usuarioActual)
+  );
+
+  cerrarModales();
+
+  actualizarCuenta();
+
+  alert(
+    "¡Bienvenido de nuevo, " +
+    cuenta.nombre + "! 👋"
+  );
+}
+
+
+/* ==========================
+   CUENTA EN HEADER
+========================== */
+
+function actualizarCuenta() {
+
+  const area =
+    document.getElementById("accountArea");
+
+  if (usuarioActual) {
+
+    area.innerHTML = `
+
+      <span class="user">
+        👤 ${escapeHTML(usuarioActual.nombre)}
+      </span>
+
+      <button onclick="cerrarSesion()">
+        Cerrar sesión
+      </button>
+
+    `;
+
+  } else {
+
+    area.innerHTML = `
+
+      <button onclick="abrirLogin()">
+        Iniciar sesión
+      </button>
+
+      <button onclick="abrirRegistro()">
+        Crear cuenta
+      </button>
+
+    `;
+  }
+}
+
+
+/* ==========================
+   CERRAR SESIÓN
+========================== */
+
+function cerrarSesion() {
+
+  usuarioActual = null;
+
+  localStorage.removeItem("usuarioActual");
+
+  actualizarCuenta();
+
+  alert("Has cerrado sesión.");
+}
+
+
+/* ==========================
+   DESCARGAR LIBRO
+========================== */
+
+function descargarLibro(nombreLibro) {
+
+  if (!usuarioActual) {
+
+    alert(
+      "🔐 Para descargar '" +
+      nombreLibro +
+      "' necesitas iniciar sesión."
+    );
+
+    abrirLogin();
+
+    return;
+  }
+
+  /*
+    Aquí iría la URL real del archivo.
+    Por ahora creamos un archivo de demostración.
+  */
+
+  const contenido =
+    "ForoNexo\n\n" +
+    "Libro: " + nombreLibro + "\n\n" +
+    "Este es un archivo de demostración.";
+
+  const archivo =
+    new Blob([contenido], {
+      type: "text/plain"
+    });
+
+  const url =
+    URL.createObjectURL(archivo);
+
+  const enlace =
+    document.createElement("a");
+
+  enlace.href = url;
+
+  enlace.download =
+    nombreLibro.replaceAll(" ", "_") + ".txt";
+
+  enlace.click();
+
+  URL.revokeObjectURL(url);
+}
+
+
+/* ==========================
+   MODALES
+========================== */
+
+function cerrarModales() {
+
+  document.getElementById("loginModal")
+    .style.display = "none";
+
+  document.getElementById("registerModal")
+    .style.display = "none";
+}
+
+
+/* ==========================
+   SEGURIDAD BÁSICA DE TEXTO
+========================== */
+
+function escapeHTML(text) {
+
+  const div =
+    document.createElement("div");
+
+  div.textContent = text;
+
+  return div.innerHTML;
+}
+
+
+/* ==========================
+   INICIO
+========================== */
+
+mostrarPosts();
+
+actualizarCuenta();
+
+</script>
+
+</body>
+</html>
